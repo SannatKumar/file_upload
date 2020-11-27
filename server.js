@@ -21,20 +21,19 @@ app.post("/picture", async(req, res) => {
                 status:false,
                 message: "No files"
             })
-            else{
-                const{picture}= req.files
-                picture.mv("./uploads" + picture.name)
+        }else{
+            const{picture}= req.files
+            picture.mv("./uploads/" + picture.name)
 
-                res.send({
-                    status: true,
-                    message: "File is upload"
-                })
-            }
+            res.send({
+                status: true,
+                message: "File is upload"
+            })
         }
     } catch(e){
         res.status(500).send(e)
     }  
-}
+})
 
 
 const port = process.env.PORT || 4000
