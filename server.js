@@ -15,6 +15,29 @@ app.use(express.urlencoded({ extended: true}))
 app.use(morgan("dev"))
 
 app.post("/picture", async(req, res) => {
-    try
+    try{
+        if(!req.files){
+            res.send({
+                status:false,
+                message: "No files"
+            })
+            else{
+                const{picture}= req.files
+                picture.mv("./uploads" + picture.name)
+
+                res.send({
+                    status: true,
+                    message: "File is upload"
+                })
+            }
+        }
+    } catch(e){
+        res.status(500).send(e)
+    }  
 }
-)
+
+
+const port = process.env.PORT || 4000
+
+
+app.listen(port, () => console.log("Server is Running on port ${port}"))
